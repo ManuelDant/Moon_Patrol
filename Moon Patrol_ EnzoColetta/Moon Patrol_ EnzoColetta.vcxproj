@@ -21,9 +21,15 @@
   <ItemGroup>
     <ClCompile Include="..\src\game.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\object\obstacle.cpp" />
+    <ClCompile Include="..\src\object\player.cpp" />
+    <ClCompile Include="..\src\tools\tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game.h" />
+    <ClInclude Include="..\src\object\obstacle.h" />
+    <ClInclude Include="..\src\object\player.h" />
+    <ClInclude Include="..\src\tools\tools.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

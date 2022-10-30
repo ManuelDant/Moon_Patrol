@@ -7,6 +7,9 @@
     <Filter Include="src\object">
       <UniqueIdentifier>{5f3f09fc-2532-4416-8305-4735cfcce795}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\tools">
+      <UniqueIdentifier>{962b26ba-661a-4089-8eda-43b90ccfa398}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\game.cpp">
@@ -15,10 +18,28 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\object\obstacle.cpp">
+      <Filter>src\object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\object\player.cpp">
+      <Filter>src\object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools\tools.cpp">
+      <Filter>src\tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\object\obstacle.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\object\player.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tools\tools.h">
+      <Filter>src\tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
