@@ -1,10 +1,14 @@
 #include "obstacle.h"
 
-void CreateObstacle(OBSTACLE& obstacle)
+OBSTACLE CreateObstacle()
 {
-	obstacle.XY.x;
-	obstacle.XY.y;
+	OBSTACLE obstacle{};
 
 	obstacle.height = 10;
 	obstacle.width = 10;
+
+	obstacle.XY.x = static_cast<float>(GetScreenWidth());
+	obstacle.XY.y = static_cast<float>(GetPercentageScreenHeight(80) - obstacle.height);
+
+	return obstacle;
 }

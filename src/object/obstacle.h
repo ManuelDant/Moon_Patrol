@@ -1,6 +1,8 @@
 #pragma once
 #include "raylib.h"
 
+#include "../tools/tools.h"
+
 struct OBSTACLE
 {
 	Vector2 XY;
@@ -8,4 +10,4 @@ struct OBSTACLE
 	float height;
 };
 
-void CreateObstacle(OBSTACLE& obstacle);
+OBSTACLE CreateObstacle();

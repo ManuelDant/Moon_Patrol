@@ -3,15 +3,15 @@
 float GetPercentageScreenHeight(float percentage)
 {
 	float valueToReturn = 0;
-	valueToReturn = GetScreenHeight() / 100;
+	valueToReturn = static_cast<float>(GetScreenHeight() / 100);
 	valueToReturn *= percentage;
-	return percentage;
+	return valueToReturn;
 }
 
 float GetPercentageScreenWidth(float percentage)
 {
 	float valueToReturn = 0;
-	valueToReturn = GetScreenWidth() / 100;
+	valueToReturn = static_cast<float>(GetScreenWidth() / 100);
 	valueToReturn *= percentage;
-	return percentage;
+	return valueToReturn;
 }
