@@ -6,8 +6,12 @@
 struct PLAYER
 {
 	Vector2 XY;
+	Vector2 speed;
 	float width;
 	float height;
+
+	bool isJumping;
+	float jumpTime;
 
 	int lives;
 };

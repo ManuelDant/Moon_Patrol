@@ -11,6 +11,7 @@ void Game()
 	{
 		Draw(P1, obstacle);
 		PlayerInput(P1);
+		PlayerMove(P1);
 		ObjectMove(obstacle);
 		CheckColision(obstacle, P1);
 	}
@@ -38,15 +39,29 @@ void Draw(PLAYER P1, OBSTACLE obstacle)
 
 void PlayerInput(PLAYER& P1)
 {
-	if (IsKeyPressed(KEY_UP))
+	if (IsKeyPressed(KEY_UP) && !P1.isJumping)
 	{
-		P1.XY.y = static_cast<float>(GetPercentageScreenHeight(80) - (P1.height*5));
+		P1.speed.y = -600;
+		P1.isJumping = true;
+	}
+}
+
+void PlayerMove(PLAYER& P1)
+{
+	P1.XY.x += P1.speed.x * GetFrameTime();
+	P1.XY.y += P1.speed.y * GetFrameTime();
+
+	if (P1.isJumping)
+	{
+		P1.speed.y += 0.4f;
 	}
 
-	if (IsKeyPressed(KEY_DOWN))
+	if (P1.XY.y + P1.height> static_cast<int>(GetPercentageScreenHeight(80)))
 	{
-		P1.XY.y = static_cast<float>(GetPercentageScreenHeight(80) - P1.height);
+		P1.speed.y = 0;
+		P1.isJumping = false;
 	}
+
 }
 
 void ObjectMove(OBSTACLE& obstacle)

@@ -23,9 +23,9 @@ void PlayerInput(
 );
 
 /////////////////////////move funciton
-//void PlayerMove(
-//	PLAYER& P1
-//);
+void PlayerMove(
+	PLAYER& P1
+);
 void ObjectMove(
 	OBSTACLE& obstacle
 );
