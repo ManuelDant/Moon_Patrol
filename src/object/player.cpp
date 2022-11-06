@@ -6,7 +6,7 @@ PLAYER CreatePlayer()
 	P1.height = 25;
 	P1.width = 25;
 
-	P1.XY.x = static_cast<float>(GetScreenWidth()/2);
+	P1.XY.x = static_cast<float>(GetScreenWidth()/4);
 	P1.XY.y = static_cast<float>(GetPercentageScreenHeight(90) - P1.height);
 
 	P1.startPosition = P1.XY.y;

@@ -100,6 +100,16 @@ void PlayerMove(PLAYER& P1)
 		P1.isJumping = false;
 	}
 
+	if (P1.XY.x < 0)
+	{
+		P1.XY.x = 0;
+	}
+
+	if (P1.XY.x + P1.width > GetScreenWidth()/2)
+	{
+		P1.XY.x = GetScreenWidth()/2 - P1.width;
+	}
+
 }
 
 void ObjectMove(OBSTACLE& obstacle)
