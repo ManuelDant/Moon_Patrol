@@ -7,13 +7,15 @@ PLAYER CreatePlayer()
 	P1.width = 25;
 
 	P1.XY.x = static_cast<float>(GetScreenWidth()/2);
-	P1.XY.y = static_cast<float>(GetPercentageScreenHeight(80) - P1.height);
+	P1.XY.y = static_cast<float>(GetPercentageScreenHeight(90) - P1.height);
+
+	P1.startPosition = P1.XY.y;
+	P1.maxJump = P1.startPosition + P1.height * 4;
 
 	P1.speed.x = 0;
 	P1.speed.y = 0;
 
 	P1.isJumping = false;
-	P1.jumpTime = 0;
 
 	P1.lives = 1;
 

@@ -9,12 +9,23 @@
 
 using namespace std;
 
+struct BackGroundPosition
+{
+	Rectangle FarBackGround;
+	Rectangle NearBackGround;
+	Rectangle floorBackGround;
+};
+
 void Game();
 
 ////////////////////////draw functions
 void Draw(
 	PLAYER P1,
-	OBSTACLE obstacle
+	OBSTACLE obstacle,
+	BackGroundPosition backGround[]
+);
+void DrawParalax(
+	BackGroundPosition backGround[]
 );
 
 ////////////////////////input function
@@ -29,6 +40,9 @@ void PlayerMove(
 void ObjectMove(
 	OBSTACLE& obstacle
 );
+void ParalaxMove(
+	BackGroundPosition backGround[]
+);
 
 /////////////////////Colision funciton
 void CheckColision(
@@ -39,4 +53,9 @@ void CheckColision(
 void CheckPlayerObstacle(
 	OBSTACLE& obstacle,
 	PLAYER& P1
+);
+
+//create
+void createBackGroundPosition(
+	BackGroundPosition backGround[]
 );

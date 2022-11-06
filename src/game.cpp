@@ -1,32 +1,40 @@
 #include "game.h"
 
+static const int backGroundsTot = 2;
+
 void Game()
 {
 	PLAYER P1 = CreatePlayer();
 	OBSTACLE obstacle = CreateObstacle();
 
+	BackGroundPosition backGround[backGroundsTot];
+	createBackGroundPosition(backGround);
+
 	const int amountObstacles = 1;
 
 	while (!WindowShouldClose() && P1.lives > 0)
 	{
-		Draw(P1, obstacle);
+		Draw(P1, obstacle, backGround);
 		PlayerInput(P1);
 		PlayerMove(P1);
 		ObjectMove(obstacle);
+		ParalaxMove(backGround);
 		CheckColision(obstacle, P1);
+
 	}
+
 }
 
-void Draw(PLAYER P1, OBSTACLE obstacle)
+void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[])
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
 
 	//draw background
-	DrawLine(0, static_cast<int>(GetPercentageScreenHeight(80)), GetScreenWidth(), static_cast<int>(GetPercentageScreenHeight(80)), WHITE);
+	DrawParalax(backGround);
 
 	//draw player
-	DrawRectangle(static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y), static_cast<int>(P1.width), static_cast<int>(P1.height), WHITE);
+	DrawRectangle(static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y), static_cast<int>(P1.width), static_cast<int>(P1.height), BLACK);
 
 	//draw obstacle
 	DrawRectangle(static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), static_cast<int>(obstacle.width), static_cast<int>(obstacle.height), WHITE);
@@ -37,6 +45,22 @@ void Draw(PLAYER P1, OBSTACLE obstacle)
 	EndDrawing();
 }
 
+void DrawParalax(BackGroundPosition backGround[])
+{
+	//far background
+	DrawRectangleRec(backGround[0].FarBackGround, RED);
+	DrawRectangleRec(backGround[1].FarBackGround, Color{230, 0, 55, 255});
+							
+	//near background
+	DrawRectangleRec(backGround[0].NearBackGround, BLUE);
+	DrawRectangleRec(backGround[1].NearBackGround, Color{ 41, 121, 241, 255 });
+
+							
+	//floor		
+	DrawRectangleRec(backGround[0].floorBackGround, GREEN);
+	DrawRectangleRec(backGround[1].floorBackGround, Color{ 41, 255, 48, 255 });
+}
+
 void PlayerInput(PLAYER& P1)
 {
 	if (IsKeyPressed(KEY_UP) && !P1.isJumping)
@@ -44,6 +68,20 @@ void PlayerInput(PLAYER& P1)
 		P1.speed.y = -600;
 		P1.isJumping = true;
 	}
+
+	if (IsKeyDown(KEY_RIGHT))
+	{
+		P1.speed.x = 200;
+	}
+	else if (IsKeyDown(KEY_LEFT))
+	{
+		P1.speed.x = -200;
+	}
+	else if (!P1.isJumping)
+	{
+		P1.speed.x = 0;
+	}
+
 }
 
 void PlayerMove(PLAYER& P1)
@@ -53,10 +91,10 @@ void PlayerMove(PLAYER& P1)
 
 	if (P1.isJumping)
 	{
-		P1.speed.y += 0.4f;
+		P1.speed.y += 900 * GetFrameTime();
 	}
 
-	if (P1.XY.y + P1.height> static_cast<int>(GetPercentageScreenHeight(80)))
+	if (P1.XY.y > P1.startPosition)
 	{
 		P1.speed.y = 0;
 		P1.isJumping = false;
@@ -74,6 +112,34 @@ void ObjectMove(OBSTACLE& obstacle)
 	}
 }
 
+void ParalaxMove(BackGroundPosition backGround[])
+{
+	for (int i = 0; i < backGroundsTot; i++)
+	{
+		backGround[i].FarBackGround.x -= 50 * GetFrameTime();
+		backGround[i].NearBackGround.x -= 100 * GetFrameTime();
+		backGround[i].floorBackGround.x -= 200 * GetFrameTime();
+	}
+
+	for (int i = 0; i < backGroundsTot; i++)
+	{
+		if (backGround[i].FarBackGround.x < 0 - backGround[i].FarBackGround.width)
+		{
+			backGround[i].FarBackGround.x = static_cast<float>(GetScreenWidth());
+		}
+
+		if (backGround[i].NearBackGround.x < 0 - backGround[i].NearBackGround.width)
+		{
+			backGround[i].NearBackGround.x = static_cast<float>(GetScreenWidth());
+		}
+
+		if (backGround[i].floorBackGround.x < 0 - backGround[i].floorBackGround.width)
+		{
+			backGround[i].floorBackGround.x = static_cast<float>(GetScreenWidth());
+		}
+	}
+}
+
 void CheckColision(OBSTACLE& obstacle, PLAYER& P1)
 {
 	CheckPlayerObstacle(obstacle, P1);
@@ -82,9 +148,40 @@ void CheckColision(OBSTACLE& obstacle, PLAYER& P1)
 void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1)
 {
 	if (CheckCollisionRecs(
-		Rectangle{obstacle.XY.x, obstacle.XY.y, obstacle.width, obstacle.height}, 
-		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height}))
+		Rectangle{ obstacle.XY.x, obstacle.XY.y, obstacle.width, obstacle.height },
+		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height }))
 	{
 		P1.lives--;
+	}
+}
+
+void createBackGroundPosition(BackGroundPosition backGround[])
+{
+	for (int i = 0; i < backGroundsTot; i++)
+	{
+		if (i == 0)
+		{
+			backGround[i].FarBackGround.x = 0;
+			backGround[i].NearBackGround.x = 0;
+			backGround[i].floorBackGround.x = 0;
+		}
+		else
+		{
+			backGround[i].FarBackGround.x = static_cast<float>(GetScreenWidth());
+			backGround[i].NearBackGround.x = static_cast<float>(GetScreenWidth());
+			backGround[i].floorBackGround.x = static_cast<float>(GetScreenWidth());
+		}
+
+		backGround[i].FarBackGround.y = (GetPercentageScreenHeight(0));
+		backGround[i].NearBackGround.y = (GetPercentageScreenHeight(45));
+		backGround[i].floorBackGround.y = (GetPercentageScreenHeight(90));
+
+		backGround[i].FarBackGround.width = static_cast<float>(GetScreenWidth());
+		backGround[i].NearBackGround.width = static_cast<float>(GetScreenWidth());
+		backGround[i].floorBackGround.width = static_cast<float>(GetScreenWidth());
+
+		backGround[i].FarBackGround.height = (GetPercentageScreenHeight(100));
+		backGround[i].NearBackGround.height = (GetPercentageScreenHeight(55));
+		backGround[i].floorBackGround.height = (GetPercentageScreenHeight(10));
 	}
 }
