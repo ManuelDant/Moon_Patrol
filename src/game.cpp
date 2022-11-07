@@ -9,11 +9,19 @@ static const int backGroundsTot = 2;
 
 void Game(bool& closeGame)
 {
-	PLAYER P1 = CreatePlayer();
-	OBSTACLE obstacle = CreateObstacle();
-
 	BackGroundPosition backGround[backGroundsTot];
 	createBackGroundPosition(backGround);
+
+	PLAYER P1 = CreatePlayer();
+
+	P1.XY.y = static_cast<float>(backGround[0].floorBackGround.y - P1.height);
+
+	P1.startPosition = P1.XY.y;
+	P1.maxJump = P1.startPosition + P1.height * 4;
+
+	OBSTACLE obstacle = CreateObstacle();
+
+	obstacle.XY.y = static_cast<float>(backGround[0].floorBackGround.y - obstacle.height);
 
 	const int amountObstacles = 1;
 
@@ -49,7 +57,7 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[])
 	DrawRectangle(static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), static_cast<int>(obstacle.width), static_cast<int>(obstacle.height), GREEN);
 
 	//draw Version
-	DrawText("version 0.1", GetScreenWidth() - MeasureText("version 0.1", 10), GetScreenHeight() - 10, 10, BLACK);
+	DrawText("version 0.2", 0, 0, 20, BLACK);
 
 	EndDrawing();
 }
@@ -227,9 +235,6 @@ void createBackGroundPosition(BackGroundPosition backGround[])
 			backGround[i].floorBackGround.x = static_cast<float>(GetScreenWidth());
 		}
 
-		backGround[i].FarBackGround.y = (GetPercentageScreenHeight(0));
-		backGround[i].NearBackGround.y = (GetPercentageScreenHeight(30));
-		backGround[i].floorBackGround.y = (GetPercentageScreenHeight(90));
 
 		backGround[i].FarBackGround.width = static_cast<float>(FarBackground.width);
 		backGround[i].NearBackGround.width = static_cast<float>(NearBackgound1.width);
@@ -238,5 +243,9 @@ void createBackGroundPosition(BackGroundPosition backGround[])
 		backGround[i].FarBackGround.height = static_cast<float>(FarBackground.height);
 		backGround[i].NearBackGround.height = static_cast<float>(NearBackgound1.height);
 		backGround[i].floorBackGround.height = static_cast<float>(FloorBackground.height);
+
+		backGround[i].FarBackGround.y = (GetPercentageScreenHeight(0));
+		backGround[i].NearBackGround.y = GetScreenHeight() - backGround[i].floorBackGround.height - backGround[i].NearBackGround.height;
+		backGround[i].floorBackGround.y = GetScreenHeight() - backGround[i].floorBackGround.height;
 	}
 }
