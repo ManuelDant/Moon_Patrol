@@ -1,5 +1,10 @@
 #include "game.h"
 
+Texture2D FarBackground;
+Texture2D NearBackgound1;
+Texture2D NearBackgound2;
+Texture2D FloorBackground;
+
 static const int backGroundsTot = 2;
 
 void Game(bool& closeGame)

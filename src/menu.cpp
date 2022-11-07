@@ -30,7 +30,11 @@ void Menu()
 			break;
 
 		case 2:
-
+			do
+			{
+				DrawTexture(backgroundMenu, 0, 0, WHITE);
+				Credits();
+			} while (!IsExitPressed());
 			break;
 
 		case 3:
@@ -52,19 +56,19 @@ void DrawMenu(optionsButtons buttons[])
 	ClearBackground(WHITE);
 
 	DrawTexture(backgroundMenu, 0, 0, WHITE);
-	DrawLinesScreen();
+	//DrawLinesScreen();
 
 	for (int i = 0; i < totButtons; i++)
 	{
 		DrawRectangle(
-			static_cast<int>(buttons[i].option.x), 
-			static_cast<int>(buttons[i].option.y), 
+			static_cast<int>(buttons[i].option.x),
+			static_cast<int>(buttons[i].option.y),
 			static_cast<int>(buttons[i].option.width),
-				static_cast<int>(buttons[i].option.height),
+			static_cast<int>(buttons[i].option.height),
 			Color{ 0, 228, 48, 100 });
 	}
-	
-	DrawText("play", static_cast<int>(buttons[0].option.x), static_cast<int>(buttons[0].option.y), 20, BLACK  );
+
+	DrawText("play", static_cast<int>(buttons[0].option.x), static_cast<int>(buttons[0].option.y), 20, BLACK);
 	DrawText("options", static_cast<int>(buttons[1].option.x), static_cast<int>(buttons[1].option.y), 20, BLACK);
 	DrawText("credits", static_cast<int>(buttons[2].option.x), static_cast<int>(buttons[2].option.y), 20, BLACK);
 	DrawText("exit", static_cast<int>(buttons[3].option.x), static_cast<int>(buttons[3].option.y), 20, BLACK);
@@ -74,13 +78,13 @@ void DrawMenu(optionsButtons buttons[])
 
 void CreateOptions(optionsButtons buttons[])
 {
-	for (int i = 0; i < totButtons-1; i++)
+	for (int i = 0; i < totButtons - 1; i++)
 	{
 		buttons[i].option.height = GetPercentageScreenHeight(7);
 		buttons[i].option.width = GetPercentageScreenWidth(15);
 	}
 
-	for (int i = 0; i < totButtons-1; i++)
+	for (int i = 0; i < totButtons - 1; i++)
 	{
 		buttons[i].option.x = GetPercentageScreenWidth(16);
 	}
@@ -98,6 +102,10 @@ void CreateOptions(optionsButtons buttons[])
 void loadTexturesGame()
 {
 	backgroundMenu = LoadTexture("res/textures/menu.png");
+	FarBackground = LoadTexture("res/textures/farBackGround.png");
+	NearBackgound1 = LoadTexture("res/textures/nearBackGround_1.png");
+	NearBackgound2 = LoadTexture("res/textures/nearBackGround_2.png");
+	FloorBackground = LoadTexture("res/textures/floor.png");
 }
 
 int InputReader(optionsButtons buttons[])
@@ -108,7 +116,7 @@ int InputReader(optionsButtons buttons[])
 		{
 			return 0;
 		}
-		else if(CheckCollisionPointRec(GetMousePosition(), buttons[1].option))
+		else if (CheckCollisionPointRec(GetMousePosition(), buttons[1].option))
 		{
 			return 1;
 		}
@@ -125,4 +133,16 @@ int InputReader(optionsButtons buttons[])
 	}
 
 	return 4;
+}
+
+bool IsExitPressed()
+{
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+	{
+		if ((GetMouseX() > (GetScreenWidth() - 100)) && (GetMouseY() < 55))
+		{
+			return true;
+		}
+	}
+	return false;
 }
