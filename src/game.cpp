@@ -46,10 +46,10 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[])
 	DrawRectangle(static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y), static_cast<int>(P1.width), static_cast<int>(P1.height), BLACK);
 
 	//draw obstacle
-	DrawRectangle(static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), static_cast<int>(obstacle.width), static_cast<int>(obstacle.height), WHITE);
+	DrawRectangle(static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), static_cast<int>(obstacle.width), static_cast<int>(obstacle.height), GREEN);
 
 	//draw Version
-	DrawText("version 0.1", GetScreenWidth() - MeasureText("version 0.1", 10), GetScreenHeight() - 10, 10, WHITE);
+	DrawText("version 0.1", GetScreenWidth() - MeasureText("version 0.1", 10), GetScreenHeight() - 10, 10, BLACK);
 
 	EndDrawing();
 }
@@ -57,17 +57,53 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[])
 void DrawParalax(BackGroundPosition backGround[])
 {
 	//far background
-	DrawRectangleRec(backGround[0].FarBackGround, RED);
-	DrawRectangleRec(backGround[1].FarBackGround, Color{230, 0, 55, 255});
-							
-	//near background
-	DrawRectangleRec(backGround[0].NearBackGround, BLUE);
-	DrawRectangleRec(backGround[1].NearBackGround, Color{ 41, 121, 241, 255 });
+	DrawTexture(FarBackground,
+		static_cast<int>(backGround[0].FarBackGround.x),
+		static_cast<int>(backGround[0].FarBackGround.y),
+		WHITE);
 
-							
+	DrawTexture(FarBackground,
+		static_cast<int>(backGround[1].FarBackGround.x),
+		static_cast<int>(backGround[1].FarBackGround.y),
+		WHITE);
+
+	//near background1
+	DrawTexture(NearBackgound2, 
+		static_cast<int>(backGround[0].NearBackGround.x),
+		static_cast<int>(backGround[0].NearBackGround.y),
+		WHITE);
+	DrawTexture(NearBackgound1,
+		static_cast<int>(backGround[0].NearBackGround.x + NearBackgound1.width),
+		static_cast<int>(backGround[0].NearBackGround.y),
+		WHITE);
+	DrawTexture(NearBackgound1,
+		static_cast<int>(backGround[0].NearBackGround.x + NearBackgound1.width * 2),
+		static_cast<int>(backGround[0].NearBackGround.y),
+		WHITE);
+
+	//near background2
+	DrawTexture(NearBackgound1, 
+		static_cast<int>(backGround[1].NearBackGround.x),
+		static_cast<int>(backGround[1].NearBackGround.y),
+		WHITE);
+	DrawTexture(NearBackgound2,
+		static_cast<int>(backGround[1].NearBackGround.x + NearBackgound1.width),
+		static_cast<int>(backGround[1].NearBackGround.y),
+		WHITE);
+	DrawTexture(NearBackgound1,
+		static_cast<int>(backGround[1].NearBackGround.x + NearBackgound1.width * 2),
+		static_cast<int>(backGround[1].NearBackGround.y),
+		WHITE);
+	 
 	//floor		
-	DrawRectangleRec(backGround[0].floorBackGround, GREEN);
-	DrawRectangleRec(backGround[1].floorBackGround, Color{ 41, 255, 48, 255 });
+	DrawTexture(FloorBackground, 
+		static_cast<int>(backGround[0].floorBackGround.x),
+		static_cast<int>(backGround[0].floorBackGround.y),
+		WHITE);											
+	DrawTexture(FloorBackground, 						
+		static_cast<int>(backGround[1].floorBackGround.x),
+		static_cast<int>(backGround[1].floorBackGround.y),
+		WHITE);
 }
 
 void PlayerInput(PLAYER& P1)
@@ -114,9 +150,9 @@ void PlayerMove(PLAYER& P1)
 		P1.XY.x = 0;
 	}
 
-	if (P1.XY.x + P1.width > GetScreenWidth()/2)
+	if (P1.XY.x + P1.width > GetScreenWidth() / 2)
 	{
-		P1.XY.x = GetScreenWidth()/2 - P1.width;
+		P1.XY.x = GetScreenWidth() / 2 - P1.width;
 	}
 
 }
@@ -142,17 +178,17 @@ void ParalaxMove(BackGroundPosition backGround[])
 
 	for (int i = 0; i < backGroundsTot; i++)
 	{
-		if (backGround[i].FarBackGround.x < 0 - backGround[i].FarBackGround.width)
+		if (backGround[i].FarBackGround.x < 0 - GetScreenWidth())
 		{
 			backGround[i].FarBackGround.x = static_cast<float>(GetScreenWidth());
 		}
 
-		if (backGround[i].NearBackGround.x < 0 - backGround[i].NearBackGround.width)
+		if (backGround[i].NearBackGround.x < 0 - GetScreenWidth())
 		{
 			backGround[i].NearBackGround.x = static_cast<float>(GetScreenWidth());
 		}
 
-		if (backGround[i].floorBackGround.x < 0 - backGround[i].floorBackGround.width)
+		if (backGround[i].floorBackGround.x < 0 - GetScreenWidth())
 		{
 			backGround[i].floorBackGround.x = static_cast<float>(GetScreenWidth());
 		}
@@ -192,15 +228,15 @@ void createBackGroundPosition(BackGroundPosition backGround[])
 		}
 
 		backGround[i].FarBackGround.y = (GetPercentageScreenHeight(0));
-		backGround[i].NearBackGround.y = (GetPercentageScreenHeight(45));
+		backGround[i].NearBackGround.y = (GetPercentageScreenHeight(30));
 		backGround[i].floorBackGround.y = (GetPercentageScreenHeight(90));
 
-		backGround[i].FarBackGround.width = static_cast<float>(GetScreenWidth());
-		backGround[i].NearBackGround.width = static_cast<float>(GetScreenWidth());
-		backGround[i].floorBackGround.width = static_cast<float>(GetScreenWidth());
+		backGround[i].FarBackGround.width = static_cast<float>(FarBackground.width);
+		backGround[i].NearBackGround.width = static_cast<float>(NearBackgound1.width);
+		backGround[i].floorBackGround.width = static_cast<float>(FloorBackground.width);
 
-		backGround[i].FarBackGround.height = (GetPercentageScreenHeight(100));
-		backGround[i].NearBackGround.height = (GetPercentageScreenHeight(55));
-		backGround[i].floorBackGround.height = (GetPercentageScreenHeight(10));
+		backGround[i].FarBackGround.height = static_cast<float>(FarBackground.height);
+		backGround[i].NearBackGround.height = static_cast<float>(NearBackgound1.height);
+		backGround[i].floorBackGround.height = static_cast<float>(FloorBackground.height);
 	}
 }

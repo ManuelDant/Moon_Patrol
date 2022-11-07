@@ -3,8 +3,8 @@
 PLAYER CreatePlayer()
 {
 	PLAYER P1{};
-	P1.height = 25;
-	P1.width = 25;
+	P1.height = 50;
+	P1.width = 50;
 
 	P1.XY.x = static_cast<float>(GetScreenWidth()/4);
 	P1.XY.y = static_cast<float>(GetPercentageScreenHeight(90) - P1.height);

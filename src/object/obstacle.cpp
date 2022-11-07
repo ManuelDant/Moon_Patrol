@@ -4,8 +4,8 @@ OBSTACLE CreateObstacle()
 {
 	OBSTACLE obstacle{};
 
-	obstacle.height = 25;
-	obstacle.width = 25;
+	obstacle.height = 50;
+	obstacle.width = 50;
 
 	obstacle.XY.x = static_cast<float>(GetScreenWidth());
 	obstacle.XY.y = static_cast<float>(GetPercentageScreenHeight(90) - obstacle.height);
