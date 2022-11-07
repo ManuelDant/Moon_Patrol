@@ -2,7 +2,7 @@
 
 static const int backGroundsTot = 2;
 
-void Game()
+void Game(bool& closeGame)
 {
 	PLAYER P1 = CreatePlayer();
 	OBSTACLE obstacle = CreateObstacle();
@@ -20,7 +20,11 @@ void Game()
 		ObjectMove(obstacle);
 		ParalaxMove(backGround);
 		CheckColision(obstacle, P1);
+	}
 
+	if (P1.lives <= 0)
+	{
+		closeGame = false;
 	}
 
 }

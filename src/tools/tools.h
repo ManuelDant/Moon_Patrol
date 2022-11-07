@@ -9,3 +9,7 @@ float GetPercentageScreenHeight(
 float GetPercentageScreenWidth(
 	float percentage
 );
+
+void DrawLinesScreen(
+
+);

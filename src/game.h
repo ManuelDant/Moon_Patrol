@@ -16,7 +16,9 @@ struct BackGroundPosition
 	Rectangle floorBackGround;
 };
 
-void Game();
+void Game(
+	bool& closeGame
+);
 
 ////////////////////////draw functions
 void Draw(
