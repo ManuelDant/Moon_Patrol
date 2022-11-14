@@ -23,17 +23,19 @@
     <ClCompile Include="..\src\game.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\menu.cpp" />
+    <ClCompile Include="..\src\object\flyEnemy.cpp" />
     <ClCompile Include="..\src\object\obstacle.cpp" />
     <ClCompile Include="..\src\object\player.cpp" />
-    <ClCompile Include="..\src\tools\tools.cpp" />
+    <ClCompile Include="..\src\tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\credits.h" />
     <ClInclude Include="..\src\game.h" />
     <ClInclude Include="..\src\menu.h" />
+    <ClInclude Include="..\src\object\flyEnemy.h" />
     <ClInclude Include="..\src\object\obstacle.h" />
     <ClInclude Include="..\src\object\player.h" />
-    <ClInclude Include="..\src\tools\tools.h" />
+    <ClInclude Include="..\src\tools.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

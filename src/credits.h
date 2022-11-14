@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-#include "tools/tools.h"
+#include "tools.h"
 
 void Credits();
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "raylib.h"
 
-#include "../tools/tools.h"
+#include "../tools.h"
 
 struct OBSTACLE
 {
@@ -11,3 +11,7 @@ struct OBSTACLE
 };
 
 OBSTACLE CreateObstacle();
+
+void ObjectMove(
+	OBSTACLE& obstacle
+);

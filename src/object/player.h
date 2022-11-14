@@ -1,7 +1,7 @@
 #pragma once
 #include "raylib.h"
 
-#include "../tools/tools.h"
+#include "../tools.h"
 
 struct PLAYER
 {
@@ -14,7 +14,16 @@ struct PLAYER
 
 	bool isJumping;
 
+	int socre;
 	int lives;
 };
 
 PLAYER CreatePlayer();
+
+void PlayerInput(
+	PLAYER& P1
+);
+
+void PlayerMove(
+	PLAYER& P1
+);

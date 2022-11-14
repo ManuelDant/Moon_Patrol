@@ -106,6 +106,8 @@ void loadTexturesGame()
 	NearBackgound1 = LoadTexture("res/textures/nearBackGround_1.png");
 	NearBackgound2 = LoadTexture("res/textures/nearBackGround_2.png");
 	FloorBackground = LoadTexture("res/textures/floor.png");
+	enemy = LoadTexture("res/textures/enemy.png");
+	dron1 = LoadTexture("res/textures/flyEnemy_1.png");
 }
 
 int InputReader(optionsButtons buttons[])
