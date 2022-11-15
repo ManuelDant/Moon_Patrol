@@ -9,6 +9,7 @@ extern Texture2D NearBackgound2;
 extern Texture2D FloorBackground;
 extern Texture2D enemy;
 extern Texture2D dron1;
+extern Texture2D bullet;
 
 struct optionsButtons
 {

@@ -6,9 +6,11 @@ Texture2D NearBackgound2;
 Texture2D FloorBackground;
 Texture2D enemy;
 Texture2D dron1;
+Texture2D bullet;
 
 static const int backGroundsTot = 2;
 static const int maxFlyEnemies = 3;
+static const int maxBullets = 4;
 
 void Game(bool& closeGame)
 {
@@ -21,6 +23,15 @@ void Game(bool& closeGame)
 
 	P1.startPosition = P1.XY.y;
 	P1.maxJump = P1.startPosition + P1.height * 4;
+
+	BULLET ArrayBullets[maxBullets];
+
+	for (int i = 0; i < maxBullets; i++)
+	{
+		CreateBullet(ArrayBullets[i]);
+		ArrayBullets[i].XY.x = P1.XY.x + P1.width / 2;
+		ArrayBullets[i].XY.y = P1.XY.y;
+	}
 
 	OBSTACLE obstacle = CreateObstacle();
 
@@ -41,9 +52,10 @@ void Game(bool& closeGame)
 
 	while (!WindowShouldClose() && P1.lives > 0)
 	{
-		Draw(P1, obstacle, backGround, ArrayFlyEnemy);
-		PlayerInput(P1);
+		Draw(P1, obstacle, backGround, ArrayFlyEnemy, ArrayBullets);
+		PlayerInput(P1, ArrayBullets);
 		PlayerMove(P1);
+		BulleMove(ArrayBullets, P1);
 		ObjectMove(obstacle);
 		FlyEnemyMove(ArrayFlyEnemy);
 		ParalaxMove(backGround);
@@ -57,7 +69,7 @@ void Game(bool& closeGame)
 
 }
 
-void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEMY ArrayFlyEnemy[])
+void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
@@ -82,6 +94,17 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEM
 			static_cast<int>(ArrayFlyEnemy[i].height), 
 			GREEN);
 		DrawTexture(dron1, static_cast<int>(ArrayFlyEnemy[i].x), static_cast<int>(ArrayFlyEnemy[i].y), WHITE);
+	}
+
+	//draw bullet
+	for (int i = 0; i < maxBullets; i++)
+	{
+		DrawTexture(
+			bullet,
+			static_cast<int>(ArrayBullets[i].XY.x), 
+			static_cast<int>(ArrayBullets[i].XY.y),
+			WHITE
+		);
 	}
 
 	//draw Version

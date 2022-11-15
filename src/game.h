@@ -26,7 +26,8 @@ void Draw(
 	PLAYER P1,
 	OBSTACLE obstacle,
 	BackGroundPosition backGround[],
-	FLYENEMY ArrayFlyEnemy[]
+	FLYENEMY ArrayFlyEnemy[],
+	BULLET ArrayBullets[]
 );
 void DrawParalax(
 	BackGroundPosition backGround[]

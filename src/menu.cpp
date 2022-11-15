@@ -108,6 +108,7 @@ void loadTexturesGame()
 	FloorBackground = LoadTexture("res/textures/floor.png");
 	enemy = LoadTexture("res/textures/enemy.png");
 	dron1 = LoadTexture("res/textures/flyEnemy_1.png");
+	bullet = LoadTexture("res/textures/bullet.png");
 }
 
 int InputReader(optionsButtons buttons[])
