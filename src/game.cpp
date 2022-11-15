@@ -12,25 +12,41 @@ static const int backGroundsTot = 2;
 static const int maxFlyEnemies = 3;
 static const int maxBullets = 4;
 
+static bool isPlayer2 = false;
+
 void Game(bool& closeGame)
 {
 	BackGroundPosition backGround[backGroundsTot];
 	createBackGroundPosition(backGround);
 
 	PLAYER P1 = CreatePlayer();
+	PLAYER P2 = CreatePlayer2();
 
 	P1.XY.y = static_cast<float>(backGround[0].floorBackGround.y - P1.height);
 
 	P1.startPosition = P1.XY.y;
 	P1.maxJump = P1.startPosition + P1.height * 4;
 
+	P2.XY.y = static_cast<float>(backGround[0].floorBackGround.y - P2.height);
+
+	P2.startPosition = P2.XY.y;
+	P2.maxJump = P2.startPosition + P2.height * 4;
+
 	BULLET ArrayBullets[maxBullets];
+	BULLET ArrayBulletsP2[maxBullets];
 
 	for (int i = 0; i < maxBullets; i++)
 	{
 		CreateBullet(ArrayBullets[i]);
 		ArrayBullets[i].XY.x = P1.XY.x + P1.width / 2;
 		ArrayBullets[i].XY.y = P1.XY.y;
+	}
+
+	for (int i = 0; i < maxBullets; i++)
+	{
+		CreateBullet(ArrayBulletsP2[i]);
+		ArrayBulletsP2[i].XY.x = P2.XY.x + P2.width / 2;
+		ArrayBulletsP2[i].XY.y = P2.XY.y;
 	}
 
 	OBSTACLE obstacle = CreateObstacle();
@@ -50,16 +66,23 @@ void Game(bool& closeGame)
 
 	const int amountObstacles = 1;
 
-	while (!WindowShouldClose() && P1.lives > 0)
+	while (!WindowShouldClose() && P1.lives > 0 && P2.lives > 0)
 	{
-		Draw(P1, obstacle, backGround, ArrayFlyEnemy, ArrayBullets);
-		PlayerInput(P1, ArrayBullets);
-		PlayerMove(P1);
-		BulleMove(ArrayBullets, P1);
+		Draw(P1,P2, obstacle, backGround, ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
+		PlayerInput(P1, ArrayBullets);	
+		PlayerMove(P1);	
+		BulleMove(ArrayBullets, P1);		
 		ObjectMove(obstacle);
 		FlyEnemyMove(ArrayFlyEnemy);
 		ParalaxMove(backGround);
-		CheckColision(obstacle, P1, ArrayFlyEnemy, ArrayBullets);
+		CheckColision(obstacle, P1, P2, ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
+
+		if (isPlayer2)
+		{
+			Player2Input(P2, ArrayBulletsP2);
+			Player2Move(P2);
+			BulleMovePlayer2(ArrayBulletsP2, P2);
+		}
 	}
 
 	if (P1.lives <= 0)
@@ -67,9 +90,13 @@ void Game(bool& closeGame)
 		closeGame = false;
 	}
 
+	if (P2.lives <= 0)
+	{
+		closeGame = false;
+	}
 }
 
-void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
+void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[])
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
@@ -79,6 +106,10 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEM
 
 	//draw player
 	DrawRectangle(static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y), static_cast<int>(P1.width), static_cast<int>(P1.height), BLACK);
+	if (isPlayer2)
+	{
+		DrawRectangle(static_cast<int>(P2.XY.x), static_cast<int>(P2.XY.y), static_cast<int>(P2.width), static_cast<int>(P2.height), RED);
+	}
 
 	//draw obstacle
 	DrawRectangle(static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), static_cast<int>(obstacle.width), static_cast<int>(obstacle.height), GREEN);
@@ -111,12 +142,30 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEM
 				WHITE
 			);
 		}
+
+		if (!ArrayBulletsP2[i].isDestroyed)
+		{
+			DrawTexture(
+				bullet,
+				static_cast<int>(ArrayBulletsP2[i].XY.x),
+				static_cast<int>(ArrayBulletsP2[i].XY.y),
+				WHITE
+			);
+		}
 	}
 
 	//draw Version
-	DrawText("version 0.3", 0, 0, 20, BLACK);
+	DrawText("version 0.4", 0, 0, 20, BLACK);
 
 	EndDrawing();
+}
+
+void Activate2Players() {
+	isPlayer2 = true;
+}
+
+void Activate1Player() {
+	isPlayer2 = false;
 }
 
 void DrawParalax(BackGroundPosition backGround[])
@@ -231,13 +280,13 @@ void createBackGroundPosition(BackGroundPosition backGround[])
 	}
 }
 
-void CheckColision(OBSTACLE& obstacle, PLAYER& P1, FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
+void CheckColision(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[])
 {
-	CheckPlayerObstacle(obstacle, P1);
-	CheckBulletFlyEnemy(ArrayFlyEnemy, ArrayBullets);
+	CheckPlayerObstacle(obstacle, P1, P2);
+	CheckBulletFlyEnemy(ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
 }
 
-void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1)
+void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2)
 {
 	if (CheckCollisionRecs(
 		Rectangle{ obstacle.XY.x, obstacle.XY.y, obstacle.width, obstacle.height },
@@ -245,9 +294,19 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1)
 	{
 		P1.lives--;
 	}
+
+	if (isPlayer2)
+	{
+		if (CheckCollisionRecs(
+			Rectangle{ obstacle.XY.x, obstacle.XY.y, obstacle.width, obstacle.height },
+			Rectangle{ P2.XY.x, P2.XY.y, P2.width, P2.height }))
+		{
+			P2.lives--;
+		}
+	}	
 }
 
-void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
+void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[])
 {
 	for (int x = 0; x < maxFlyEnemies; x++)
 	{
@@ -262,11 +321,27 @@ void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
 				{ ArrayBullets[y].XY.x ,
 				ArrayBullets[y].XY.y,
 				static_cast<float>(bullet.width),
-				static_cast<float>(bullet.height) }))
+				static_cast<float>(bullet.height) })) 
 			{
 				ArrayFlyEnemy[x].isAlive = false;
 				ArrayBullets[y].isDestroyed = true;
 				ArrayBullets[y].isShooted = true;
+			}
+
+			if (CheckCollisionRecs(
+				{ ArrayFlyEnemy[x].x ,
+				ArrayFlyEnemy[x].y,
+				ArrayFlyEnemy[x].width,
+				ArrayFlyEnemy[x].height },
+
+				{ ArrayBulletsP2[y].XY.x ,
+				ArrayBulletsP2[y].XY.y,
+				static_cast<float>(bullet.width),
+				static_cast<float>(bullet.height) }))
+			{
+				ArrayFlyEnemy[x].isAlive = false;
+				ArrayBulletsP2[y].isDestroyed = true;
+				ArrayBulletsP2[y].isShooted = true;
 			}
 		}
 	}

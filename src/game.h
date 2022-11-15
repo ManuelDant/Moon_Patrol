@@ -24,10 +24,12 @@ void Game(
 ////////////////////////draw functions
 void Draw(
 	PLAYER P1,
+	PLAYER P2,
 	OBSTACLE obstacle,
 	BackGroundPosition backGround[],
 	FLYENEMY ArrayFlyEnemy[],
-	BULLET ArrayBullets[]
+	BULLET ArrayBullets[],
+	BULLET ArrayBulletsP2[]
 );
 void DrawParalax(
 	BackGroundPosition backGround[]
@@ -39,20 +41,28 @@ void createBackGroundPosition(
 	BackGroundPosition backGround[]
 );
 
+void Activate1Player();
+void Activate2Players();
+
 /////////////////////Colision funciton
 void CheckColision(
 	OBSTACLE& obstacle,
 	PLAYER& P1,
+	PLAYER& P2,
 	FLYENEMY ArrayFlyEnemy[],
-	BULLET ArrayBullets[]
+	BULLET ArrayBullets[],
+	BULLET ArrayBulletsP2[]
 );
 
 void CheckPlayerObstacle(
 	OBSTACLE& obstacle,
-	PLAYER& P1
+	PLAYER& P1,
+	PLAYER& P2
 );
+
 
 void CheckBulletFlyEnemy(
 	FLYENEMY ArrayFlyEnemy[],
-	BULLET ArrayBullets[]
+	BULLET ArrayBullets[],
+	BULLET ArrayBulletsP2[]
 );

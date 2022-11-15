@@ -28,13 +28,22 @@ struct BULLET
 };
 
 PLAYER CreatePlayer();
+PLAYER CreatePlayer2();
 
 void PlayerInput(
 	PLAYER& P1, BULLET ArrayBullets[]
 );
 
+void Player2Input(
+	PLAYER& P2, BULLET ArrayBullets[]
+);
+
 void PlayerMove(
 	PLAYER& P1
+);
+
+void Player2Move(
+	PLAYER& P2
 );
 
 void CreateBullet(
@@ -44,4 +53,9 @@ void CreateBullet(
 void BulleMove(
 	BULLET ArrayBullets[],
 	PLAYER P1
+);
+
+void BulleMovePlayer2(
+	BULLET ArrayBullets[],
+	PLAYER P2
 );

@@ -1,6 +1,7 @@
 #include "menu.h"
+#include "game.h"
 
-static const int totButtons = 4;
+static const int totButtons = 5;
 
 Texture2D backgroundMenu;
 
@@ -9,7 +10,7 @@ void Menu()
 	bool closeGame;
 	closeGame = false;
 
-	optionsButtons buttons[4];
+	optionsButtons buttons[5];
 	CreateOptions(buttons);
 
 	loadTexturesGame();
@@ -21,12 +22,15 @@ void Menu()
 		switch (InputReader(buttons))
 		{
 		case 0:
+			Activate1Player();
 			closeGame = true;
 			Game(closeGame);
 			break;
 
 		case 1:
-
+			Activate2Players();
+			closeGame = true;
+			Game(closeGame);
 			break;
 
 		case 2:
@@ -41,6 +45,9 @@ void Menu()
 			closeGame = true;
 			break;
 
+		case 4:
+			
+			break;
 		default:
 			break;
 		}
@@ -69,9 +76,10 @@ void DrawMenu(optionsButtons buttons[])
 	}
 
 	DrawText("play", static_cast<int>(buttons[0].option.x), static_cast<int>(buttons[0].option.y), 20, BLACK);
-	DrawText("options", static_cast<int>(buttons[1].option.x), static_cast<int>(buttons[1].option.y), 20, BLACK);
+	DrawText("2 players", static_cast<int>(buttons[1].option.x), static_cast<int>(buttons[1].option.y), 20, BLACK);
 	DrawText("credits", static_cast<int>(buttons[2].option.x), static_cast<int>(buttons[2].option.y), 20, BLACK);
 	DrawText("exit", static_cast<int>(buttons[3].option.x), static_cast<int>(buttons[3].option.y), 20, BLACK);
+	DrawText("options", static_cast<int>(buttons[4].option.x), static_cast<int>(buttons[4].option.y), 20, BLACK);
 
 	EndDrawing();
 }
@@ -97,6 +105,11 @@ void CreateOptions(optionsButtons buttons[])
 	buttons[3].option.width = GetPercentageScreenWidth(10);
 	buttons[3].option.x = GetPercentageScreenWidth(49);
 	buttons[3].option.y = GetPercentageScreenHeight(75);
+
+	buttons[4].option.height = GetPercentageScreenHeight(7);
+	buttons[4].option.width = GetPercentageScreenWidth(15);
+	buttons[4].option.x = GetPercentageScreenWidth(75);
+	buttons[4].option.y = GetPercentageScreenHeight(50);
 }
 
 void loadTexturesGame()
@@ -131,11 +144,13 @@ int InputReader(optionsButtons buttons[])
 		{
 			return 3;
 		}
-
-		return 4;
+		else if (CheckCollisionPointRec(GetMousePosition(), buttons[4].option))
+		{
+			return 4;
+		}
 	}
 
-	return 4;
+	return 5;
 }
 
 bool IsExitPressed()
