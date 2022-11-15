@@ -59,7 +59,7 @@ void Game(bool& closeGame)
 		ObjectMove(obstacle);
 		FlyEnemyMove(ArrayFlyEnemy);
 		ParalaxMove(backGround);
-		CheckColision(obstacle, P1);
+		CheckColision(obstacle, P1, ArrayFlyEnemy, ArrayBullets);
 	}
 
 	if (P1.lives <= 0)
@@ -87,24 +87,30 @@ void Draw(PLAYER P1, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEM
 	//draw enemy
 	for (int i = 0; i < maxFlyEnemies; i++)
 	{
-		DrawRectangle(
-			static_cast<int>(ArrayFlyEnemy[i].x),
-			static_cast<int>(ArrayFlyEnemy[i].y),
-			static_cast<int>(ArrayFlyEnemy[i].width),
-			static_cast<int>(ArrayFlyEnemy[i].height), 
-			GREEN);
-		DrawTexture(dron1, static_cast<int>(ArrayFlyEnemy[i].x), static_cast<int>(ArrayFlyEnemy[i].y), WHITE);
+		if (ArrayFlyEnemy[i].isAlive)
+		{
+			DrawRectangle(
+				static_cast<int>(ArrayFlyEnemy[i].x),
+				static_cast<int>(ArrayFlyEnemy[i].y),
+				static_cast<int>(ArrayFlyEnemy[i].width),
+				static_cast<int>(ArrayFlyEnemy[i].height),
+				GREEN);
+			DrawTexture(dron1, static_cast<int>(ArrayFlyEnemy[i].x), static_cast<int>(ArrayFlyEnemy[i].y), WHITE);
+		}
 	}
 
 	//draw bullet
 	for (int i = 0; i < maxBullets; i++)
 	{
-		DrawTexture(
-			bullet,
-			static_cast<int>(ArrayBullets[i].XY.x), 
-			static_cast<int>(ArrayBullets[i].XY.y),
-			WHITE
-		);
+		if (!ArrayBullets[i].isDestroyed)
+		{
+			DrawTexture(
+				bullet,
+				static_cast<int>(ArrayBullets[i].XY.x),
+				static_cast<int>(ArrayBullets[i].XY.y),
+				WHITE
+			);
+		}
 	}
 
 	//draw Version
@@ -225,9 +231,10 @@ void createBackGroundPosition(BackGroundPosition backGround[])
 	}
 }
 
-void CheckColision(OBSTACLE& obstacle, PLAYER& P1)
+void CheckColision(OBSTACLE& obstacle, PLAYER& P1, FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
 {
 	CheckPlayerObstacle(obstacle, P1);
+	CheckBulletFlyEnemy(ArrayFlyEnemy, ArrayBullets);
 }
 
 void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1)
@@ -237,5 +244,30 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1)
 		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height }))
 	{
 		P1.lives--;
+	}
+}
+
+void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[])
+{
+	for (int x = 0; x < maxFlyEnemies; x++)
+	{
+		for (int y = 0; y < maxBullets; y++)
+		{
+			if (CheckCollisionRecs(
+				{ ArrayFlyEnemy[x].x ,
+				ArrayFlyEnemy[x].y,
+				ArrayFlyEnemy[x].width,
+				ArrayFlyEnemy[x].height },
+
+				{ ArrayBullets[y].XY.x ,
+				ArrayBullets[y].XY.y,
+				static_cast<float>(bullet.width),
+				static_cast<float>(bullet.height) }))
+			{
+				ArrayFlyEnemy[x].isAlive = false;
+				ArrayBullets[y].isDestroyed = true;
+				ArrayBullets[y].isShooted = true;
+			}
+		}
 	}
 }

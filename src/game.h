@@ -42,10 +42,17 @@ void createBackGroundPosition(
 /////////////////////Colision funciton
 void CheckColision(
 	OBSTACLE& obstacle,
-	PLAYER& P1
+	PLAYER& P1,
+	FLYENEMY ArrayFlyEnemy[],
+	BULLET ArrayBullets[]
 );
 
 void CheckPlayerObstacle(
 	OBSTACLE& obstacle,
 	PLAYER& P1
+);
+
+void CheckBulletFlyEnemy(
+	FLYENEMY ArrayFlyEnemy[],
+	BULLET ArrayBullets[]
 );
