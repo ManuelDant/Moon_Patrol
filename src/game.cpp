@@ -1,19 +1,23 @@
 #include "game.h"
 #include "score.h"
 
-Texture2D FarBackground;
-Texture2D NearBackgound1;
-Texture2D NearBackgound2;
-Texture2D FloorBackground;
+Texture2D farBackground;
+Texture2D nearBackgound1;
+Texture2D nearBackgound2;
+Texture2D floorBackground;
 Texture2D enemy;
+Texture2D pauseButton;
 Texture2D dron1;
 Texture2D bullet;
+Texture2D playerimg;
 
 static const int backGroundsTot = 2;
 static const int maxFlyEnemies = 3;
 static const int maxBullets = 4;
 
 static bool isPlayer2 = false;
+
+bool pause = false;
 
 void Game(bool& closeGame)
 {
@@ -70,20 +74,38 @@ void Game(bool& closeGame)
 	while (!WindowShouldClose() && P1.lives > 0 && P2.lives > 0)
 	{
 		Draw(P1,P2, obstacle, backGround, ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
-		PlayerInput(P1, ArrayBullets);	
-		PlayerMove(P1);	
-		BulleMove(ArrayBullets, P1);		
-		ObjectMove(obstacle);
-		FlyEnemyMove(ArrayFlyEnemy);
-		ParalaxMove(backGround);
-		CheckColision(obstacle, P1, P2, ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
-
-		if (isPlayer2)
+		if (!pause)
 		{
-			Player2Input(P2, ArrayBulletsP2);
-			Player2Move(P2);
-			BulleMovePlayer2(ArrayBulletsP2, P2);
+			PlayerInput(P1, ArrayBullets);
+			PlayerMove(P1);
+			BulleMove(ArrayBullets, P1);
+			ObjectMove(obstacle);
+			FlyEnemyMove(ArrayFlyEnemy);
+			ParalaxMove(backGround);
+			CheckColision(obstacle, P1, P2, ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
+
+			if (isPlayer2)
+			{
+				Player2Input(P2, ArrayBulletsP2);
+				Player2Move(P2);
+				BulleMovePlayer2(ArrayBulletsP2, P2);
+			}
+
+			if (IsKeyReleased(KEY_ESCAPE))
+			{
+				pause = true;
+			}
 		}
+		else
+		{
+			Pause();
+			if (IsKeyReleased(KEY_SPACE))
+			{
+				P1.lives = 0;
+				pause = false;
+			}
+		}
+		
 	}
 
 	if (P1.lives <= 0)
@@ -95,6 +117,7 @@ void Game(bool& closeGame)
 	{
 		closeGame = false;
 	}
+
 }
 
 void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround[], FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[])
@@ -107,14 +130,13 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 	DrawScore();
 
 	//draw player
-	DrawRectangle(static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y), static_cast<int>(P1.width), static_cast<int>(P1.height), BLACK);
+	DrawTexture(playerimg, static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y - 20), WHITE);
 	if (isPlayer2)
 	{
-		DrawRectangle(static_cast<int>(P2.XY.x), static_cast<int>(P2.XY.y), static_cast<int>(P2.width), static_cast<int>(P2.height), RED);
+		DrawTexture(playerimg, static_cast<int>(P2.XY.x), static_cast<int>(P2.XY.y - 20), RED);
 	}
 
 	//draw obstacle
-	DrawRectangle(static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), static_cast<int>(obstacle.width), static_cast<int>(obstacle.height), GREEN);
 	DrawTexture(enemy, static_cast<int>(obstacle.XY.x), static_cast<int>(obstacle.XY.y), WHITE);
 
 	//draw enemy
@@ -122,12 +144,6 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 	{
 		if (ArrayFlyEnemy[i].isAlive)
 		{
-			DrawRectangle(
-				static_cast<int>(ArrayFlyEnemy[i].x),
-				static_cast<int>(ArrayFlyEnemy[i].y),
-				static_cast<int>(ArrayFlyEnemy[i].width),
-				static_cast<int>(ArrayFlyEnemy[i].height),
-				GREEN);
 			DrawTexture(dron1, static_cast<int>(ArrayFlyEnemy[i].x), static_cast<int>(ArrayFlyEnemy[i].y), WHITE);
 		}
 	}
@@ -135,6 +151,7 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 	//draw bullet
 	for (int i = 0; i < maxBullets; i++)
 	{
+		
 		if (!ArrayBullets[i].isDestroyed)
 		{
 			DrawTexture(
@@ -143,6 +160,7 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 				static_cast<int>(ArrayBullets[i].XY.y),
 				WHITE
 			);
+			
 		}
 
 		if (!ArrayBulletsP2[i].isDestroyed)
@@ -154,12 +172,23 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 				WHITE
 			);
 		}
+		if (ArrayBullets[i].isDestroyed == true && ArrayBullets[i].isShooted == true)
+		{
+			ArrayBullets[i].isDestroyed = false;
+		}
 	}
 
 	//draw Version
-	DrawText("version 0.4", 0, 0, 20, BLACK);
+	DrawText("version 1.0", 0, 0, 20, BLACK);
 	UpdateMaxScore();
 
+	if (pause)
+	{
+		DrawTexture(pauseButton, static_cast<int>(GetPercentageScreenWidth(30)), static_cast<int>(GetPercentageScreenHeight(5)), WHITE);
+		DrawText("Game Paused", (GetScreenWidth() / 2) - (MeasureText("Game Paused", 45) / 2 - 80), static_cast<int>(GetPercentageScreenHeight(22)), 45, BLACK);
+		DrawText("ESC to Resume", (GetScreenWidth() / 2) - (MeasureText("ESC to Resume", 47) / 2), static_cast<int>(GetPercentageScreenHeight(60)), 47, BLACK);
+		DrawText("SPACE to Go Menu", (GetScreenWidth() / 2) - (MeasureText("SPACE to Go Menu", 45) / 2), static_cast<int>(GetPercentageScreenHeight(70)), 45, BLACK);
+	}
 	EndDrawing();
 }
 
@@ -174,50 +203,50 @@ void Activate1Player() {
 void DrawParalax(BackGroundPosition backGround[])
 {
 	//far background
-	DrawTexture(FarBackground,
+	DrawTexture(farBackground,
 		static_cast<int>(backGround[0].FarBackGround.x),
 		static_cast<int>(backGround[0].FarBackGround.y),
 		WHITE);
 
-	DrawTexture(FarBackground,
+	DrawTexture(farBackground,
 		static_cast<int>(backGround[1].FarBackGround.x),
 		static_cast<int>(backGround[1].FarBackGround.y),
 		WHITE);
 
 	//near background1
-	DrawTexture(NearBackgound2,
+	DrawTexture(nearBackgound2,
 		static_cast<int>(backGround[0].NearBackGround.x),
 		static_cast<int>(backGround[0].NearBackGround.y),
 		WHITE);
-	DrawTexture(NearBackgound1,
-		static_cast<int>(backGround[0].NearBackGround.x + NearBackgound1.width),
+	DrawTexture(nearBackgound1,
+		static_cast<int>(backGround[0].NearBackGround.x + nearBackgound1.width),
 		static_cast<int>(backGround[0].NearBackGround.y),
 		WHITE);
-	DrawTexture(NearBackgound1,
-		static_cast<int>(backGround[0].NearBackGround.x + NearBackgound1.width * 2),
+	DrawTexture(nearBackgound1,
+		static_cast<int>(backGround[0].NearBackGround.x + nearBackgound1.width * 2),
 		static_cast<int>(backGround[0].NearBackGround.y),
 		WHITE);
 
 	//near background2
-	DrawTexture(NearBackgound1,
+	DrawTexture(nearBackgound1,
 		static_cast<int>(backGround[1].NearBackGround.x),
 		static_cast<int>(backGround[1].NearBackGround.y),
 		WHITE);
-	DrawTexture(NearBackgound2,
-		static_cast<int>(backGround[1].NearBackGround.x + NearBackgound1.width),
+	DrawTexture(nearBackgound2,
+		static_cast<int>(backGround[1].NearBackGround.x + nearBackgound1.width),
 		static_cast<int>(backGround[1].NearBackGround.y),
 		WHITE);
-	DrawTexture(NearBackgound1,
-		static_cast<int>(backGround[1].NearBackGround.x + NearBackgound1.width * 2),
+	DrawTexture(nearBackgound1,
+		static_cast<int>(backGround[1].NearBackGround.x + nearBackgound1.width * 2),
 		static_cast<int>(backGround[1].NearBackGround.y),
 		WHITE);
 
 	//floor		
-	DrawTexture(FloorBackground,
+	DrawTexture(floorBackground,
 		static_cast<int>(backGround[0].floorBackGround.x),
 		static_cast<int>(backGround[0].floorBackGround.y),
 		WHITE);
-	DrawTexture(FloorBackground,
+	DrawTexture(floorBackground,
 		static_cast<int>(backGround[1].floorBackGround.x),
 		static_cast<int>(backGround[1].floorBackGround.y),
 		WHITE);
@@ -269,13 +298,13 @@ void createBackGroundPosition(BackGroundPosition backGround[])
 		}
 
 
-		backGround[i].FarBackGround.width = static_cast<float>(FarBackground.width);
-		backGround[i].NearBackGround.width = static_cast<float>(NearBackgound1.width);
-		backGround[i].floorBackGround.width = static_cast<float>(FloorBackground.width);
+		backGround[i].FarBackGround.width = static_cast<float>(farBackground.width);
+		backGround[i].NearBackGround.width = static_cast<float>(nearBackgound1.width);
+		backGround[i].floorBackGround.width = static_cast<float>(floorBackground.width);
 
-		backGround[i].FarBackGround.height = static_cast<float>(FarBackground.height);
-		backGround[i].NearBackGround.height = static_cast<float>(NearBackgound1.height);
-		backGround[i].floorBackGround.height = static_cast<float>(FloorBackground.height);
+		backGround[i].FarBackGround.height = static_cast<float>(farBackground.height);
+		backGround[i].NearBackGround.height = static_cast<float>(nearBackgound1.height);
+		backGround[i].floorBackGround.height = static_cast<float>(floorBackground.height);
 
 		backGround[i].FarBackGround.y = (GetPercentageScreenHeight(0));
 		backGround[i].NearBackGround.y = GetScreenHeight() - backGround[i].floorBackGround.height - backGround[i].NearBackGround.height;
@@ -346,7 +375,6 @@ void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET
 			{
 				AddScore(1); //Suma +3 Puntos.		
 				ArrayFlyEnemy[x].isAlive = false;
-				ArrayBullets[y].isDestroyed = true;
 				ArrayBullets[y].isShooted = true;
 			}
 
@@ -362,10 +390,29 @@ void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET
 				static_cast<float>(bullet.width),
 				static_cast<float>(bullet.height) }))
 			{
+				AddScore(1); //Suma +3 Puntos.
 				ArrayFlyEnemy[x].isAlive = false;
-				ArrayBulletsP2[y].isDestroyed = true;
 				ArrayBulletsP2[y].isShooted = true;
 			}
 		}
 	}
+}
+
+void Pause() {
+	if (IsKeyReleased(KEY_ESCAPE))
+	{
+		pause = false;
+		
+	}
+}
+
+bool ExitPause() {
+	if (pause)
+	{
+		if (IsKeyReleased(KEY_SPACE))
+		{
+			return true;
+		}
+	}
+	return false;
 }

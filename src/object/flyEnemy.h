@@ -12,7 +12,7 @@ struct FLYENEMY
 	float width;
 	float height;
 	bool isAlive;
-	bool IsGoingDown;
+	bool isGoingDown;
 };
 
 void CreateFlyEnemy(

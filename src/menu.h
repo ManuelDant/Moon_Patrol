@@ -3,13 +3,15 @@
 #include "game.h"
 #include "credits.h"
 
-extern Texture2D FarBackground;
-extern Texture2D NearBackgound1;
-extern Texture2D NearBackgound2;
-extern Texture2D FloorBackground;
+extern Texture2D farBackground;
+extern Texture2D nearBackgound1;
+extern Texture2D nearBackgound2;
+extern Texture2D floorBackground;
 extern Texture2D enemy;
+extern Texture2D pauseButton;
 extern Texture2D dron1;
 extern Texture2D bullet;
+extern Texture2D playerimg;
 
 struct optionsButtons
 {

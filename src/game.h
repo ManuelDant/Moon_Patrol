@@ -66,3 +66,6 @@ void CheckBulletFlyEnemy(
 	BULLET ArrayBullets[],
 	BULLET ArrayBulletsP2[]
 );
+
+void Pause();
+bool ExitPause();

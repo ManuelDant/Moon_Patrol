@@ -3,12 +3,12 @@
 #include "score.h"
 
 static const int totButtons = 5;
+static bool closeGame = false;
 
 Texture2D backgroundMenu;
 
 void Menu()
 {
-	bool closeGame;
 	closeGame = false;
 
 	optionsButtons buttons[5];
@@ -76,11 +76,12 @@ void DrawMenu(optionsButtons buttons[])
 			Color{ 0, 228, 48, 100 });
 	}
 
-	DrawText("play", static_cast<int>(buttons[0].option.x), static_cast<int>(buttons[0].option.y), 20, BLACK);
-	DrawText("2 players", static_cast<int>(buttons[1].option.x), static_cast<int>(buttons[1].option.y), 20, BLACK);
-	DrawText("credits", static_cast<int>(buttons[2].option.x), static_cast<int>(buttons[2].option.y), 20, BLACK);
-	DrawText("exit", static_cast<int>(buttons[3].option.x), static_cast<int>(buttons[3].option.y), 20, BLACK);
-	DrawText("options", static_cast<int>(buttons[4].option.x), static_cast<int>(buttons[4].option.y), 20, BLACK);
+	DrawText("Play", static_cast<int>(buttons[0].option.x), static_cast<int>(buttons[0].option.y), 20, BLACK);
+	DrawText("2 Players", static_cast<int>(buttons[1].option.x), static_cast<int>(buttons[1].option.y), 20, BLACK);
+	DrawText("Credits", static_cast<int>(buttons[2].option.x), static_cast<int>(buttons[2].option.y), 20, BLACK);
+	DrawText("Exit", static_cast<int>(buttons[3].option.x), static_cast<int>(buttons[3].option.y), 20, BLACK);
+	DrawText("How to Play", static_cast<int>(buttons[4].option.x), static_cast<int>(buttons[4].option.y), 20, BLACK);
+	DrawText("version 1.0", 0, 0, 20, BLACK);
 	
 	DrawMaxScore();
 	
@@ -119,13 +120,22 @@ void CreateOptions(optionsButtons buttons[])
 void loadTexturesGame()
 {
 	backgroundMenu = LoadTexture("res/textures/menu.png");
-	FarBackground = LoadTexture("res/textures/farBackGround.png");
-	NearBackgound1 = LoadTexture("res/textures/nearBackGround_1.png");
-	NearBackgound2 = LoadTexture("res/textures/nearBackGround_2.png");
-	FloorBackground = LoadTexture("res/textures/floor.png");
+	farBackground = LoadTexture("res/textures/farBackGround.png");
+	nearBackgound1 = LoadTexture("res/textures/nearBackGround_1.png");
+	nearBackgound2 = LoadTexture("res/textures/nearBackGround_2.png");
+	floorBackground = LoadTexture("res/textures/floor.png");
 	enemy = LoadTexture("res/textures/enemy.png");
+	pauseButton = LoadTexture("res/textures/enemy.png");
 	dron1 = LoadTexture("res/textures/flyEnemy_1.png");
 	bullet = LoadTexture("res/textures/bullet.png");
+	playerimg = LoadTexture("res/textures/playerimg.png");
+
+	playerimg.height = 200;
+	playerimg.width = 130;
+
+	pauseButton.width = enemy.width * 6;
+	pauseButton.height = enemy.height * 6;
+
 }
 
 int InputReader(optionsButtons buttons[])
