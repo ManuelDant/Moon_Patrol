@@ -40,17 +40,17 @@ PLAYER CreatePlayer2() {
 void PlayerInput(PLAYER& P1, BULLET ArrayBullets[])
 {
 
-	if ((IsKeyPressed(KEY_UP)) && !P1.isJumping)
+	if ((IsKeyPressed(KEY_W)) && !P1.isJumping)
 	{
 		P1.speed.y = -600;
 		P1.isJumping = true;
 	}
 
-	if (IsKeyDown(KEY_RIGHT))
+	if (IsKeyDown(KEY_D))
 	{
 		P1.speed.x = 200;
 	}
-	else if (IsKeyDown(KEY_LEFT))
+	else if (IsKeyDown(KEY_A))
 	{
 		P1.speed.x = -200;
 	}
@@ -59,7 +59,7 @@ void PlayerInput(PLAYER& P1, BULLET ArrayBullets[])
 		P1.speed.x = 0;
 	}
 
-	if (IsKeyPressed(KEY_DOWN))
+	if (IsKeyPressed(KEY_SPACE))
 	{
 		for (int i = 0; i < maxBullets; i++)
 		{
@@ -77,17 +77,17 @@ void PlayerInput(PLAYER& P1, BULLET ArrayBullets[])
 void Player2Input(PLAYER& P2, BULLET ArrayBullets[])
 {
 
-	if ((IsKeyPressed(KEY_W)) && !P2.isJumping)
+	if ((IsKeyPressed(KEY_UP)) && !P2.isJumping)
 	{
 		P2.speed.y = -600;
 		P2.isJumping = true;
 	}
 
-	if (IsKeyDown(KEY_D))
+	if (IsKeyDown(KEY_RIGHT))
 	{
 		P2.speed.x = 200;
 	}
-	else if (IsKeyDown(KEY_A))
+	else if (IsKeyDown(KEY_LEFT))
 	{
 		P2.speed.x = -200;
 	}
@@ -96,7 +96,7 @@ void Player2Input(PLAYER& P2, BULLET ArrayBullets[])
 		P2.speed.x = 0;
 	}
 
-	if (IsKeyPressed(KEY_SPACE))
+	if (IsKeyPressed(KEY_ENTER))
 	{
 		for (int i = 0; i < maxBullets; i++)
 		{

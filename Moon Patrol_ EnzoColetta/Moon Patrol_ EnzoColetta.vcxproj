@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\credits.cpp" />
     <ClCompile Include="..\src\game.cpp" />
+    <ClCompile Include="..\src\howToPlay.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\menu.cpp" />
     <ClCompile Include="..\src\object\flyEnemy.cpp" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\credits.h" />
     <ClInclude Include="..\src\game.h" />
+    <ClInclude Include="..\src\howToPlay.h" />
     <ClInclude Include="..\src\menu.h" />
     <ClInclude Include="..\src\object\flyEnemy.h" />
     <ClInclude Include="..\src\object\obstacle.h" />

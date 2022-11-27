@@ -1,6 +1,4 @@
 #include "menu.h"
-#include "game.h"
-#include "score.h"
 
 static const int totButtons = 5;
 static bool closeGame = false;
@@ -47,7 +45,11 @@ void Menu()
 			break;
 
 		case 4:
-			
+			do
+			{
+				DrawTexture(backgroundMenu, 0, 0, WHITE);
+				HowToPlay();
+			} while (!IsExitPressed());
 			break;
 		default:
 			break;

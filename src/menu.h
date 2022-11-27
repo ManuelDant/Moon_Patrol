@@ -2,6 +2,8 @@
 #include <string>
 #include "game.h"
 #include "credits.h"
+#include "howToPlay.h"
+#include "score.h"
 
 extern Texture2D farBackground;
 extern Texture2D nearBackgound1;
