@@ -22,7 +22,7 @@
     <ClCompile Include="..\src\credits.cpp" />
     <ClCompile Include="..\src\game.cpp" />
     <ClCompile Include="..\src\howToPlay.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\main.cpp\main.cpp" />
     <ClCompile Include="..\src\menu.cpp" />
     <ClCompile Include="..\src\object\flyEnemy.cpp" />
     <ClCompile Include="..\src\object\obstacle.cpp" />
