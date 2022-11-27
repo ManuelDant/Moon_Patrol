@@ -12,6 +12,7 @@ void DrawHowToPlay() {
 	DrawText("Player 2", (GetScreenWidth() / 2) - (MeasureText("Player 2", 50) / 2), static_cast<int>(GetPercentageScreenHeight(30)), 50, BLACK);
 	DrawText("Movement: LEFT | RIGHT  Jump: UP", (GetScreenWidth() / 2) - (MeasureText("Movement: LEFT | RIGHT  Jump: UP", 30) / 2), static_cast<int>(GetPercentageScreenHeight(40)), 30, BLACK);
 	DrawText("Shoot: ENTER", (GetScreenWidth() / 2) - (MeasureText("Shoot: ENTER", 30) / 2), static_cast<int>(GetPercentageScreenHeight(45)), 30, BLACK);
+	DrawText("Pause: ESC", (GetScreenWidth() / 2) - (MeasureText("Pause: ESC", 30) / 2), static_cast<int>(GetPercentageScreenHeight(55)), 30, BLACK);
 	DrawText("version 1.0", 0, 0, 20, BLACK);
 	DrawExit();
 	EndDrawing();

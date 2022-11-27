@@ -9,6 +9,7 @@ struct OBSTACLE
 	float width;
 	float height;
 	int checkCollision = 0;
+	int checkCollisionP2 = 0;
 };
 
 OBSTACLE CreateObstacle();

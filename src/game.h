@@ -57,7 +57,10 @@ void CheckColision(
 void CheckPlayerObstacle(
 	OBSTACLE& obstacle,
 	PLAYER& P1,
-	PLAYER& P2
+	PLAYER& P2,
+	FLYENEMY ArrayFlyEnemy[],
+	BULLET ArrayBullets[],
+	BULLET ArrayBulletsP2[]
 );
 
 
@@ -68,4 +71,13 @@ void CheckBulletFlyEnemy(
 );
 
 void Pause();
+
 bool ExitPause();
+
+void RestartGame(OBSTACLE& obstacle,
+	PLAYER& P1,
+	PLAYER& P2,
+	FLYENEMY ArrayFlyEnemy[],
+	BULLET ArrayBullets[],
+	BULLET ArrayBulletsP2[]
+);
