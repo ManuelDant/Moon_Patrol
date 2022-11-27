@@ -90,6 +90,8 @@ void DrawMenu(optionsButtons buttons[])
 			Color{ 0, 228, 48, 100 });
 	}
 
+	DrawText("Carrefour Patrol", (GetScreenWidth() / 2) - (MeasureText("Carrefour Patrol", 80) / 2), static_cast<int>(GetPercentageScreenHeight(15)), 80, BLACK);
+	DrawText("Carrefour Patrol", (GetScreenWidth() / 2) - (MeasureText("Carrefour Patrol", 80) / 2 + 5), static_cast<int>(GetPercentageScreenHeight(16)), 80, BLUE);
 	DrawText("Play", static_cast<int>(buttons[0].option.x), static_cast<int>(buttons[0].option.y), 20, BLACK);
 	DrawText("2 Players", static_cast<int>(buttons[1].option.x), static_cast<int>(buttons[1].option.y), 20, BLACK);
 	DrawText("Credits", static_cast<int>(buttons[2].option.x), static_cast<int>(buttons[2].option.y), 20, BLACK);

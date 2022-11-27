@@ -9,7 +9,8 @@ void DrawMaxScore() {
 
 	if (maxScore > 0)
 	{
-		DrawText(TextFormat("Maxima Puntuacion: %02i", maxScore), GetScreenWidth() / 2 - 300, 10, 60, RED);
+
+		DrawText(TextFormat("Maxima Puntuacion: %02i", maxScore), GetScreenWidth() / 2 - 270, 30, 50, RED);
 	}
 }
 
