@@ -1,4 +1,5 @@
 #include "game.h"
+#include "score.h"
 
 Texture2D FarBackground;
 Texture2D NearBackgound1;
@@ -103,6 +104,7 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 
 	//draw background
 	DrawParalax(backGround);
+	DrawScore();
 
 	//draw player
 	DrawRectangle(static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y), static_cast<int>(P1.width), static_cast<int>(P1.height), BLACK);
@@ -156,6 +158,7 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 
 	//draw Version
 	DrawText("version 0.4", 0, 0, 20, BLACK);
+	UpdateMaxScore();
 
 	EndDrawing();
 }
@@ -293,6 +296,23 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2)
 		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height }))
 	{
 		P1.lives--;
+		RestartScore();
+	}
+
+	
+	if (CheckCollisionRecs(
+		Rectangle{ obstacle.XY.x, obstacle.XY.y - obstacle.height,obstacle.width / 4,obstacle.height },
+		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height }))
+	{
+		obstacle.checkCollision++;
+		if (obstacle.checkCollision == 1)
+		{
+			AddScore(1);
+		}	
+	}
+	else
+	{
+		obstacle.checkCollision = 0;
 	}
 
 	if (isPlayer2)
@@ -302,6 +322,7 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2)
 			Rectangle{ P2.XY.x, P2.XY.y, P2.width, P2.height }))
 		{
 			P2.lives--;
+			RestartScore();
 		}
 	}	
 }
@@ -323,10 +344,12 @@ void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET
 				static_cast<float>(bullet.width),
 				static_cast<float>(bullet.height) })) 
 			{
+				AddScore(1); //Suma +3 Puntos.		
 				ArrayFlyEnemy[x].isAlive = false;
 				ArrayBullets[y].isDestroyed = true;
 				ArrayBullets[y].isShooted = true;
 			}
+
 
 			if (CheckCollisionRecs(
 				{ ArrayFlyEnemy[x].x ,

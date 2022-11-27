@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "game.h"
+#include "score.h"
 
 static const int totButtons = 5;
 
@@ -80,6 +81,9 @@ void DrawMenu(optionsButtons buttons[])
 	DrawText("credits", static_cast<int>(buttons[2].option.x), static_cast<int>(buttons[2].option.y), 20, BLACK);
 	DrawText("exit", static_cast<int>(buttons[3].option.x), static_cast<int>(buttons[3].option.y), 20, BLACK);
 	DrawText("options", static_cast<int>(buttons[4].option.x), static_cast<int>(buttons[4].option.y), 20, BLACK);
+	
+	DrawMaxScore();
+	
 
 	EndDrawing();
 }

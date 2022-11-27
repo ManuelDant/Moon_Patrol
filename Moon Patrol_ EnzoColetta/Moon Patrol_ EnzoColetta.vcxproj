@@ -26,6 +26,7 @@
     <ClCompile Include="..\src\object\flyEnemy.cpp" />
     <ClCompile Include="..\src\object\obstacle.cpp" />
     <ClCompile Include="..\src\object\player.cpp" />
+    <ClCompile Include="..\src\score.cpp" />
     <ClCompile Include="..\src\tools.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +36,7 @@
     <ClInclude Include="..\src\object\flyEnemy.h" />
     <ClInclude Include="..\src\object\obstacle.h" />
     <ClInclude Include="..\src\object\player.h" />
+    <ClInclude Include="..\src\score.h" />
     <ClInclude Include="..\src\tools.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -8,6 +8,7 @@ struct OBSTACLE
 	Vector2 XY;
 	float width;
 	float height;
+	int checkCollision = 0;
 };
 
 OBSTACLE CreateObstacle();
