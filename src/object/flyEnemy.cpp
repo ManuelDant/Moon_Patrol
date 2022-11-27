@@ -21,6 +21,10 @@ void FlyEnemyMove(FLYENEMY flyEnemy[])
 {
 	float topLimit = 0;
 	float botLimit = GetPercentageScreenHeight(25);
+    int minRandom = 0;
+    int maxRandom = 1000;
+    int activateFlyEnemies = 50;
+   
 
     for (int i = 0; i < maxFlyEnemies; i++)
     {
@@ -50,7 +54,7 @@ void FlyEnemyMove(FLYENEMY flyEnemy[])
         else
         {
             flyEnemy[i].x = topLimit - flyEnemy[i].width;
-            if (GetRandomValue(0, 1000) == 50)
+            if (GetRandomValue(minRandom, maxRandom) == activateFlyEnemies)
             {
                 flyEnemy[i].isAlive = true;
             }

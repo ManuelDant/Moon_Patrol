@@ -9,10 +9,10 @@ void Menu()
 {
 	closeGame = false;
 
-	optionsButtons buttons[5];
+	optionsButtons buttons[totButtons];
 	CreateOptions(buttons);
 
-	loadTexturesGame();
+	LoadTexturesGame();
 
 	while (closeGame == false && !WindowShouldClose())
 	{
@@ -33,11 +33,17 @@ void Menu()
 			break;
 
 		case 2:
-			do
+			while (!WindowShouldClose() && !IsExitPressed())
 			{
+				closeGame = true;
 				DrawTexture(backgroundMenu, 0, 0, WHITE);
 				Credits();
-			} while (!IsExitPressed());
+			}
+
+			if (!IsExitWindow())
+			{
+				closeGame = false;
+			}
 			break;
 
 		case 3:
@@ -45,11 +51,17 @@ void Menu()
 			break;
 
 		case 4:
-			do
+			while (!WindowShouldClose()&& !IsExitPressed())
 			{
+				closeGame = true;
 				DrawTexture(backgroundMenu, 0, 0, WHITE);
 				HowToPlay();
-			} while (!IsExitPressed());
+			}
+
+			if (!IsExitWindow())
+			{
+				closeGame = false;
+			}
 			break;
 		default:
 			break;
@@ -119,7 +131,7 @@ void CreateOptions(optionsButtons buttons[])
 	buttons[4].option.y = GetPercentageScreenHeight(50);
 }
 
-void loadTexturesGame()
+void LoadTexturesGame()
 {
 	backgroundMenu = LoadTexture("res/textures/menu.png");
 	farBackground = LoadTexture("res/textures/farBackGround.png");
@@ -179,4 +191,12 @@ bool IsExitPressed()
 		}
 	}
 	return false;
+}
+
+bool IsExitWindow() {
+	if (IsExitPressed() && closeGame == true)
+	{
+		return false;
+	}
+	return true;
 }

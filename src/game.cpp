@@ -22,7 +22,7 @@ bool pause = false;
 void Game(bool& closeGame)
 {
 	BackGroundPosition backGround[backGroundsTot];
-	createBackGroundPosition(backGround);
+	CreateBackGroundPosition(backGround);
 
 	PLAYER P1 = CreatePlayer();
 	PLAYER P2 = CreatePlayer2();
@@ -130,10 +130,11 @@ void Draw(PLAYER P1, PLAYER P2, OBSTACLE obstacle, BackGroundPosition backGround
 	DrawScore();
 
 	//draw player
-	DrawTexture(playerimg, static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y - 20), WHITE);
+	int adjustPosition = 20;
+	DrawTexture(playerimg, static_cast<int>(P1.XY.x), static_cast<int>(P1.XY.y - adjustPosition), WHITE);
 	if (isPlayer2)
 	{
-		DrawTexture(playerimg, static_cast<int>(P2.XY.x), static_cast<int>(P2.XY.y - 20), RED);
+		DrawTexture(playerimg, static_cast<int>(P2.XY.x), static_cast<int>(P2.XY.y - adjustPosition), RED);
 	}
 
 	//draw obstacle
@@ -254,11 +255,14 @@ void DrawParalax(BackGroundPosition backGround[])
 
 void ParalaxMove(BackGroundPosition backGround[])
 {
+	int speedFarBG = 50;
+	int speedNearBG = 100;
+	int speedFloorBG = 200;
 	for (int i = 0; i < backGroundsTot; i++)
 	{
-		backGround[i].FarBackGround.x -= 50 * GetFrameTime();
-		backGround[i].NearBackGround.x -= 100 * GetFrameTime();
-		backGround[i].floorBackGround.x -= 200 * GetFrameTime();
+		backGround[i].FarBackGround.x -= speedFarBG * GetFrameTime();
+		backGround[i].NearBackGround.x -= speedNearBG * GetFrameTime();
+		backGround[i].floorBackGround.x -= speedFloorBG * GetFrameTime();
 	}
 
 	for (int i = 0; i < backGroundsTot; i++)
@@ -280,7 +284,7 @@ void ParalaxMove(BackGroundPosition backGround[])
 	}
 }
 
-void createBackGroundPosition(BackGroundPosition backGround[])
+void CreateBackGroundPosition(BackGroundPosition backGround[])
 {
 	for (int i = 0; i < backGroundsTot; i++)
 	{
@@ -320,6 +324,8 @@ void CheckColision(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY ArrayFly
 
 void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[])
 {
+	int checkAddScore = 1;
+
 	if (CheckCollisionRecs(
 		Rectangle{ obstacle.XY.x, obstacle.XY.y, obstacle.width, obstacle.height },
 		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height }))
@@ -334,7 +340,7 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY Ar
 		Rectangle{ P1.XY.x, P1.XY.y, P1.width, P1.height }))
 	{
 		obstacle.checkCollision++;
-		if (obstacle.checkCollision == 1)
+		if (obstacle.checkCollision == checkAddScore)
 		{
 			AddScore(1);
 		}	
@@ -360,7 +366,7 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY Ar
 		Rectangle{ P2.XY.x, P2.XY.y, P2.width, P2.height }))
 	{
 		obstacle.checkCollisionP2++;
-		if (obstacle.checkCollisionP2 == 1)
+		if (obstacle.checkCollisionP2 == checkAddScore)
 		{
 			AddScore(1);
 		}

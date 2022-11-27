@@ -2,6 +2,10 @@
 
 static const int maxBullets = 4;
 
+float speedMovementY = 600;
+float speedMovementX = 200;
+float speedJump = 900;
+
 PLAYER CreatePlayer()
 {
 	PLAYER P1{};
@@ -39,20 +43,20 @@ PLAYER CreatePlayer2() {
 
 void PlayerInput(PLAYER& P1, BULLET ArrayBullets[])
 {
-
+	
 	if ((IsKeyPressed(KEY_W)) && !P1.isJumping)
 	{
-		P1.speed.y = -600;
+		P1.speed.y = -speedMovementY;
 		P1.isJumping = true;
 	}
 
 	if (IsKeyDown(KEY_D))
 	{
-		P1.speed.x = 200;
+		P1.speed.x = speedMovementX;
 	}
 	else if (IsKeyDown(KEY_A))
 	{
-		P1.speed.x = -200;
+		P1.speed.x = -speedMovementX;
 	}
 	else if (!P1.isJumping)
 	{
@@ -79,17 +83,17 @@ void Player2Input(PLAYER& P2, BULLET ArrayBullets[])
 
 	if ((IsKeyPressed(KEY_UP)) && !P2.isJumping)
 	{
-		P2.speed.y = -600;
+		P2.speed.y = -speedMovementY;
 		P2.isJumping = true;
 	}
 
 	if (IsKeyDown(KEY_RIGHT))
 	{
-		P2.speed.x = 200;
+		P2.speed.x = speedMovementX;
 	}
 	else if (IsKeyDown(KEY_LEFT))
 	{
-		P2.speed.x = -200;
+		P2.speed.x = -speedMovementX;
 	}
 	else if (!P2.isJumping)
 	{
@@ -118,7 +122,7 @@ void PlayerMove(PLAYER& P1)
 
 	if (P1.isJumping)
 	{
-		P1.speed.y += 900 * GetFrameTime();
+		P1.speed.y += speedJump * GetFrameTime();
 	}
 
 	if (P1.XY.y > P1.startPosition)
@@ -141,7 +145,7 @@ void Player2Move(PLAYER& P2)
 
 	if (P2.isJumping)
 	{
-		P2.speed.y += 900 * GetFrameTime();
+		P2.speed.y += speedJump * GetFrameTime();
 	}
 
 	if (P2.XY.y > P2.startPosition)

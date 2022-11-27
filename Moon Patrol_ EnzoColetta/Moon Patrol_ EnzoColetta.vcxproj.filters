@@ -9,8 +9,26 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\credits.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\game.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\howToPlay.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\menu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\score.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tools.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\object\flyEnemy.cpp">
+      <Filter>src\object</Filter>
     </ClCompile>
     <ClCompile Include="..\src\object\obstacle.cpp">
       <Filter>src\object</Filter>
@@ -18,55 +36,37 @@
     <ClCompile Include="..\src\object\player.cpp">
       <Filter>src\object</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\menu.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\credits.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\object\flyEnemy.cpp">
-      <Filter>src\object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\tools.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\score.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\howToPlay.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\main.cpp\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\credits.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\game.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\howToPlay.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\menu.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\score.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tools.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\object\flyEnemy.h">
+      <Filter>src\object</Filter>
     </ClInclude>
     <ClInclude Include="..\src\object\obstacle.h">
       <Filter>src\object</Filter>
     </ClInclude>
     <ClInclude Include="..\src\object\player.h">
       <Filter>src\object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\menu.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\credits.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\object\flyEnemy.h">
-      <Filter>src\object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\tools.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\score.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\howToPlay.h">
-      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

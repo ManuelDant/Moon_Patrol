@@ -1,7 +1,5 @@
 #include "score.h"
 
-#include "raylib.h"
-
 void DrawScore() {
 	DrawText(TextFormat("Puntuacion: %02i", score), 10, 15, 40, RED);
 }

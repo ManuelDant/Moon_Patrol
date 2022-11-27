@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "raylib.h"
-#include"tools.h"
+#include "tools.h"
 
 #include "object/player.h"
 #include "object/obstacle.h"
@@ -37,7 +37,7 @@ void DrawParalax(
 void ParalaxMove(
 	BackGroundPosition backGround[]
 );
-void createBackGroundPosition(
+void CreateBackGroundPosition(
 	BackGroundPosition backGround[]
 );
 

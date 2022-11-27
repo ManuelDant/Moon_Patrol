@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
+
 #include "game.h"
 #include "credits.h"
 #include "howToPlay.h"
+
 #include "score.h"
 
 extern Texture2D farBackground;
@@ -24,10 +26,12 @@ void Menu();
 
 void DrawMenu(optionsButtons buttons[]);
 
-void loadTexturesGame();
+void LoadTexturesGame();
 
 void CreateOptions(optionsButtons buttons[]);
 
 int InputReader(optionsButtons buttons[]);
 
 bool IsExitPressed();
+
+bool IsExitWindow();

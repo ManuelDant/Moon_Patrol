@@ -14,7 +14,9 @@ OBSTACLE CreateObstacle()
 
 void ObjectMove(OBSTACLE& obstacle)
 {
-	obstacle.XY.x -= 200 * GetFrameTime();
+	int speedObstacle = 200;
+
+	obstacle.XY.x -= speedObstacle * GetFrameTime();
 
 	if (obstacle.XY.x < 0 - obstacle.width)
 	{
