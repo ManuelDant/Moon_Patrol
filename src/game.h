@@ -4,9 +4,9 @@
 #include "raylib.h"
 #include "tools.h"
 
-#include "object/player.h"
-#include "object/obstacle.h"
-#include "object/flyEnemy.h"
+#include "player.h"
+#include "obstacle.h"
+#include "flyEnemy.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#include "../tools.h"
+#include "tools.h"
 
 struct FLYENEMY
 {

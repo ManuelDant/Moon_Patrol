@@ -4,7 +4,7 @@
     <Filter Include="src">
       <UniqueIdentifier>{98196c6a-30cd-42bb-a702-f36f65e9130d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\object">
+    <Filter Include="object">
       <UniqueIdentifier>{5f3f09fc-2532-4416-8305-4735cfcce795}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -28,17 +28,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\object\flyEnemy.cpp">
-      <Filter>src\object</Filter>
+      <Filter>object</Filter>
     </ClCompile>
     <ClCompile Include="..\src\object\obstacle.cpp">
-      <Filter>src\object</Filter>
+      <Filter>object</Filter>
     </ClCompile>
     <ClCompile Include="..\src\object\player.cpp">
-      <Filter>src\object</Filter>
+      <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\main.cpp\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\credits.h">
@@ -60,13 +58,13 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\object\flyEnemy.h">
-      <Filter>src\object</Filter>
+      <Filter>object</Filter>
     </ClInclude>
     <ClInclude Include="..\src\object\obstacle.h">
-      <Filter>src\object</Filter>
+      <Filter>object</Filter>
     </ClInclude>
     <ClInclude Include="..\src\object\player.h">
-      <Filter>src\object</Filter>
+      <Filter>object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

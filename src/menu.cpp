@@ -7,6 +7,11 @@ Texture2D backgroundMenu;
 
 void Menu()
 {
+	int screenWidth = 1280;
+	int screenHeight = 720;
+	InitWindow(screenWidth, screenHeight, "Carrefour Patrol");
+	SetExitKey(NULL);
+
 	closeGame = false;
 
 	optionsButtons buttons[totButtons];
