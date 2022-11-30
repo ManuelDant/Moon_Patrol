@@ -125,7 +125,7 @@
       <AdditionalDependencies>raylib.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(SolutionDir)bat\copyRes.bat" "$(SolutionDir)" "$(Configuration)"</Command>
+      <Command>"$(SolutionDir)bat\copyRes.bat" "$(SolutionDir)" "$(Configuration)" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)lib\raylib-4.0.0_win32_msvc16\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)lib\raylib-4.0.0_win32_msvc16\include;$(SolutionDir)src\;$(SolutionDir)src\object\</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -149,19 +149,7 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>IF NOT EXIST "$(TargetDir)res\" (
-CD $(TargetDir)
-MKDIR res
-
-CD res
-
-MKDIR sounds
-MKDIR textures
-
-XCOPY "$(SolutionDir)Moon Patrol_ EnzoColetta\res\textures"  "$(TargetDir)res\textures"
-XCOPY "$(SolutionDir)Moon Patrol_ EnzoColetta\res\sounds"  "$(TargetDir)res\sounds"
-)
-</Command>
+      <Command>"$(SolutionDir)bat\copyRes.bat" "$(SolutionDir)" "$(Configuration)" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

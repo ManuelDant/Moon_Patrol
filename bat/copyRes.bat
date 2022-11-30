@@ -10,4 +10,4 @@ CD res
 
 MKDIR textures
 
-XCOPY /e /v /y "%solution_dir%Moon Patrol_EnzoColetta\res\textures\"  "%target_dir%res\textures"
+XCOPY /e /v /y "%solution_dir%Moon_Patrol_EnzoColetta\res\textures\"  "%target_dir%res\textures"
