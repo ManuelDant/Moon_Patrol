@@ -103,6 +103,7 @@ void Game(bool& closeGame)
 			{
 				P1.lives = 0;
 				pause = false;
+				RestartScore();
 			}
 		}
 		
@@ -343,6 +344,7 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY Ar
 		if (obstacle.checkCollision == checkAddScore)
 		{
 			AddScore(1);
+
 		}	
 	}
 	else
@@ -359,22 +361,23 @@ void CheckPlayerObstacle(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY Ar
 			RestartGame(obstacle, P1, P2, ArrayFlyEnemy, ArrayBullets, ArrayBulletsP2);
 			RestartScore();
 		}
+
+		if (CheckCollisionRecs(
+			Rectangle{ obstacle.XY.x, obstacle.XY.y - obstacle.height,obstacle.width / 4,obstacle.height },
+			Rectangle{ P2.XY.x, P2.XY.y, P2.width, P2.height }))
+		{
+			obstacle.checkCollisionP2++;
+			if (obstacle.checkCollisionP2 == checkAddScore)
+			{
+				AddScore(1);
+			}
+		}
+		else
+		{
+			obstacle.checkCollisionP2 = 0;
+		}
 	}	
 
-	if (CheckCollisionRecs(
-		Rectangle{ obstacle.XY.x, obstacle.XY.y - obstacle.height,obstacle.width / 4,obstacle.height },
-		Rectangle{ P2.XY.x, P2.XY.y, P2.width, P2.height }))
-	{
-		obstacle.checkCollisionP2++;
-		if (obstacle.checkCollisionP2 == checkAddScore)
-		{
-			AddScore(1);
-		}
-	}
-	else
-	{
-		obstacle.checkCollisionP2 = 0;
-	}
 }
 
 void CheckBulletFlyEnemy(FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[])
@@ -439,17 +442,19 @@ bool ExitPause() {
 }
 
 void RestartGame(OBSTACLE& obstacle, PLAYER& P1, PLAYER& P2, FLYENEMY ArrayFlyEnemy[], BULLET ArrayBullets[], BULLET ArrayBulletsP2[]) {
+	float outScreen = -200;
+
 	P1.XY.x = GetPercentageScreenWidth(15);
-	P1.XY.y = GetPercentageScreenHeight(67);
+	P1.XY.y = GetPercentageScreenHeight(66);
 
 	P2.XY.x = GetPercentageScreenWidth(10);
-	P2.XY.y = GetPercentageScreenHeight(67);
+	P2.XY.y = GetPercentageScreenHeight(66);
 	obstacle.XY.x = GetScreenWidth() + obstacle.width;
 
 	for (int i = 0; i < maxBullets; i++)
 	{
-		ArrayBullets[i].XY.y = 0 - static_cast<float>(bullet.width);
-		ArrayBulletsP2[i].XY.y = 0 - static_cast<float>(bullet.width);
+		ArrayBullets[i].XY.y = outScreen;
+		ArrayBulletsP2[i].XY.y = outScreen;
 	}
 
 	for (int i = 0; i < maxFlyEnemies; i++)
